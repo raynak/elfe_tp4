@@ -1,0 +1,1 @@
+(((the DET)(man N) NP)((sings V)(a DET)(song N) VP)S)

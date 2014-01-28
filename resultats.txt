@@ -1,0 +1,169 @@
+============
+==PARTIE 1==
+============
+
+QUESTION 1
+
+?- doit_argent(X,Y).
+X = anne,
+Y = barbara ;
+X = barbara,
+Y = cecile ;
+X = cecile,
+Y = barbara.
+
+QUESTION 2
+
+Etant donné que nous utilisons Prolog, il tourne en rond dans le cycle barbara/cecile et donc affiche en boucle les résultats... ==> 4 tuples différents; nous ne voyons pas Barbara-Barbara et Cecile-Cecile vu qu'il boucle avant de consulter ces tuples
+?- evite(X,Y).
+X = anne,
+Y = barbara ;
+X = barbara,
+Y = cecile ;
+X = cecile,
+Y = barbara ;
+X = anne,
+Y = cecile ;
+X = anne,
+Y = barbara ;
+X = anne,
+Y = cecile ;
+X = anne,
+Y = barbara ;
+X = anne,
+Y = cecile ;
+X = anne,
+Y = barbara ;
+X = anne,
+Y = cecile .
+
+QUESTION 3
+
+DES-Datalog> doit_argent(X,Y)
+
+{
+  doit_argent(anne,barbara),
+  doit_argent(barbara,cecile),
+  doit_argent(cecile,barbara)
+}
+Info: 3 tuples computed
+
+DES-Datalog> /list_et
+
+Answers:
+{
+  doit_argent(anne,barbara),
+  doit_argent(barbara,cecile),
+  doit_argent(cecile,barbara)
+}
+Info: 3 tuples in the answer table.
+Calls:
+{
+  doit_argent(A,B)
+}
+Info: 1 tuple in the call table.
+
+==> Pour evite(X,Y), résultats pour 6 tuples; nous avons Barbara-Barbara et Cecile-Cecile. Pourquoi nous les voyons? Car Datalog prend en compte les boucles, s'arrête (seul) et continue la consultation de l'arbre ensuite...
+
+DES-Datalog> evite(X,Y).
+
+{
+  evite(anne,barbara),
+  evite(anne,cecile),
+  evite(barbara,barbara),
+  evite(barbara,cecile),
+  evite(cecile,barbara),
+  evite(cecile,cecile)
+}
+Info: 6 tuples computed.
+
+============
+==PARTIE 2==
+============
+
+QUESTION 8
+
+DES> the(0,1),man(1,2),sings(2,3),a(3,4),song(4,5).
+
+Info: Processing:
+  answer :-
+    the(0,1),
+    man(1,2),
+    sings(2,3),
+    a(3,4),
+    song(4,5).
+Warning: Undefined predicate(s): [sees/2,telescope/2,unicorn/2,with/2]
+{                                           
+  answer
+}
+Info: 1 tuple computed.          
+
+DES> the(0,1),sings(1,3)  
+
+Info: Processing:
+  answer :-
+    the(0,1),
+    sings(1,3).
+Warning: Undefined predicate(s): [sees/2,telescope/2,unicorn/2,with/2]
+{                                           
+}
+Info: 0 tuples computed. 
+
+QUESTION 9
+
+1ère interprétation: 'L'homme voit une licorne avec un télescope'
+2ème interprétation: 'L'homme voit une licorne, avec un télescope'
+
+->La 2ème interprétation scinde la phrase en 2 (elle est plus compréhensible), la 1ère non.
+
+OTHER
+
+DES> /[phrase2.dl, dictionnaire1.dl, grammaire2.dl]
+
+Info: 23 rules consulted.
+Warning: Undefined predicate(s): [sings/2,song/2]
+
+DES> the(0,1),man(1,2),sees(2,3),a(3,4),unicorn(4,5),with(5,6),a(6,7),telescope(7,8)
+
+Info: Processing:
+  answer :-
+    the(0,1),
+    man(1,2),
+    sees(2,3),
+    a(3,4),
+    unicorn(4,5),
+    with(5,6),
+    a(6,7),
+    telescope(7,8).
+Warning: Undefined predicate(s): [sings/2,song/2]
+{                                           
+  answer
+}
+Info: 1 tuple computed.          
+
+DES> /list_et 
+
+Answers:
+{
+}
+Info: 0 tuples in the answer table.          
+Calls:
+{
+}
+Info: 0 tuples in the call table.          
+
+DES> s(0,X)
+
+{                                           
+  s(0,5),
+  s(0,8)
+}
+Info: 2 tuples computed.          
+
+DES> np(X,8)
+
+{                                           
+  np(3,8),
+  np(6,8)
+}
+Info: 2 tuples computed. 
